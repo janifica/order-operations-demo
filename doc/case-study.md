@@ -23,7 +23,7 @@ Parcel models these situations in an operations console: order intake, package p
 | Automated domain, bridge and HTTP checks | 42 tests passed; production build passed |
 | Local browser walkthrough | Partial/full delivery, ignored events, CSV validation and simulated recovery verified |
 | Full app → Zapier → ClickUp/Slack → receipt | Automatic task creation, two-package completion and channel notifications passed on Railway |
-| Daily schedule | Restart-safe implementation and local tests passed; hosted scheduled acceptance pending |
+| Daily schedule | Hosted scheduled catch-up, real Slack receipt and same-day restart deduplication passed |
 | Real carrier tracking | Not included; shipment events are synthetic |
 
 See [verification](verification.md) for the scope of each check. All logistics events and customers in these runs are synthetic.

@@ -25,7 +25,7 @@ Each starts with Webhooks by Zapier Catch Hook. Each ends with Webhooks by Zapie
 
 `clickup_status` maps delivered to `complete`, other states to `to do`; verify these statuses exist in the demo list. Parcel retains the finer shipment state. The bridge serializes actions per order, so task updates and notifications wait for predecessors to succeed. Separate notification and update hooks support separate retry/reconciliation outcomes. Existing Zapier user connections do not automatically enable these workflows.
 
-Optional scheduling uses `DAILY_DIGEST_TIME=09:00` and `DAILY_DIGEST_TIME_ZONE=Asia/Shanghai`. It queues one action per local date; startup catches up today only. SQLite persists the run key and action atomically. On-demand digests remain available independently. Hosted scheduled acceptance is pending deployment. No real tracking number is submitted to AfterShip. Shipment events remain synthetic even with real ClickUp and Slack actions.
+Optional scheduling uses `DAILY_DIGEST_TIME=09:00` and `DAILY_DIGEST_TIME_ZONE=Asia/Shanghai`. It queues one action per local date; startup catches up today only. SQLite persists the run key and action atomically. On-demand digests remain available independently. Hosted catch-up, Slack receipt and same-day restart deduplication passed. No real tracking number is submitted to AfterShip. Shipment events remain synthetic even with real ClickUp and Slack actions.
 
 ## Failure handling
 
@@ -35,7 +35,7 @@ Explicit ingress429 or a `rate_limit` failure receipt can retry up to three atte
 
 ## Remaining acceptance
 
-1. Deploy and verify a scheduled summary, then restart and confirm no second scheduled action for the same date.
+1. Daily scheduled catch-up and restart deduplication passed. Future daily boundaries were tested with controlled clocks.
 2. Finish narrow-screen UI acceptance and sanitized screenshots/video.
 3. Definitive rate-limit retry behavior is covered by mocked tests; no intentional real-provider rate limit was induced. Delayed setup receipts were reconciled successfully without resending ambiguous actions.
 

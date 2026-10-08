@@ -67,7 +67,7 @@ React + TypeScript + Vite frontend; Fastify + Zod API; Node's built-in SQLite mo
 
 See [architecture/API](doc/architecture.md) and [English case study](doc/case-study.md).
 
-This is a single-user demonstration. Public binding requires an access password; connected mode also requires HTTPS callbacks and a persistent database. A protected simulation instance is deployed on Railway; health, access protection, API intake and restart persistence passed. Browser frontend acceptance is blocked by Chrome, and connected SaaS acceptance remains pending. No paid subscription has been purchased.
+This is a single-user demonstration. Public binding requires an access password; connected mode also requires HTTPS callbacks and a persistent database. The protected Railway instance runs connected mode. Automatic ClickUp creation, two-package fulfillment updates, Slack notifications and scheduled digest receipts passed. Startup catch-up and restart deduplication passed; enable optional scheduling with DAILY_DIGEST_TIME and DAILY_DIGEST_TIME_ZONE. The user opened the hosted UI on a phone. Agent Chrome blocks hosted Basic-auth navigation, so the connected recording remains pending. Zapier premium features currently use a trial ending2026-10-22; no paid Zapier plan was purchased.
 
 ## Repository scope
 

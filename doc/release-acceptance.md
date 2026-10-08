@@ -1,6 +1,6 @@
 # Release acceptance
 
-Current state: local UI/domain behavior and the receipt bridge are implemented; 42 tests and production build passed. Protected deployment and automatic connected intake/fulfillment/Slack receipts passed. Scheduled deployment acceptance and final UI/media remain pending.
+Current state: local UI/domain behavior and the receipt bridge are implemented; 42 tests and production build passed. Protected deployment and automatic connected intake/fulfillment/Slack receipts passed. Scheduled catch-up/restart acceptance passed; final UI/media remain pending.
 
 ## Engineering release checklist
 
@@ -11,7 +11,7 @@ Current state: local UI/domain behavior and the receipt bridge are implemented; 
 - [x] Fulfillment: deliver one of two synthetic packages, then the other; verify partial/completed state, real task updates, Slack messages and receipts.
 - [x] Events: repeat an event and send an older event; verify no extra provider actions and no state regression.
 - [ ] Reliability: verify definitive retry handling, missing-receipt reconciliation, restart continuity and operator recovery. Do not inject local simulator failures into connected mode.
-- [ ] Daily digest: implement scheduling and persist a run key for the selected time zone. Define missed-run behavior, prevent duplicate scheduling after restart and verify a real message/receipt. Ambiguous sends must reconcile before resend.
+- [x] Daily digest: implement scheduling and persist a run key for the selected time zone. Define missed-run behavior, prevent duplicate scheduling after restart and verify a real message/receipt. Ambiguous sends must reconcile before resend.
 - [ ] UI: inspect narrow-screen layout, keyboard focus, loading/empty/error states and terminology. Record actual findings.
 - [ ] Update verification.md and case-study.md from observed evidence, then capture sanitized screenshots and a two-minute recording using demo-script.md.
 
@@ -19,6 +19,6 @@ Current state: local UI/domain behavior and the receipt bridge are implemented; 
 
 React/TypeScript/Vite/CSS provides the console. Node/Fastify/Zod provides validation, rules and authenticated endpoints. SQLite transactions and the outbox persist state and actions. Zapier dispatches ClickUp and Slack steps and returns authenticated receipts. Docker and Railway provide the planned single-instance deployment. Vitest, TypeScript builds and browser acceptance provide validation.
 
-Daily scheduling is implemented using the existing Node worker and atomic SQLite run records; local scheduling tests passed. Hosted scheduled acceptance remains pending. Actual carrier tracking and LLM summaries are optional follow-up work. No separate Redis, hosted database, scheduling SaaS or AI dependency is needed for this release.
+Daily scheduling is implemented using the existing Node worker and atomic SQLite run records; local scheduling tests passed. Hosted scheduled acceptance passed. Actual carrier tracking and LLM summaries are optional follow-up work. No separate Redis, hosted database, scheduling SaaS or AI dependency is needed for this release.
 
 Publication to Upwork and career-specific planning remain in the sibling upwork-workflow repository.
