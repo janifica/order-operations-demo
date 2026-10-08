@@ -67,7 +67,11 @@ React + TypeScript + Vite frontend; Fastify + Zod API; Node's built-in SQLite mo
 
 See [architecture/API](doc/architecture.md) and [English case study](doc/case-study.md).
 
-This is a single-user demonstration. Public binding requires an access password; connected mode also requires HTTPS callbacks and a persistent database. The protected Railway instance runs connected mode. Automatic ClickUp creation, two-package fulfillment updates, Slack notifications and scheduled digest receipts passed. Startup catch-up and restart deduplication passed; enable optional scheduling with DAILY_DIGEST_TIME and DAILY_DIGEST_TIME_ZONE. The user opened the hosted UI on a phone. Agent Chrome blocks hosted Basic-auth navigation, so the connected recording remains pending. Zapier premium features currently use a trial ending2026-10-22; no paid Zapier plan was purchased.
+This is a single-user demonstration. Public binding requires an access password; connected mode also requires HTTPS callbacks and a persistent database. The protected Railway instance runs connected mode. Automatic ClickUp creation, two-package fulfillment updates, Slack notifications and scheduled digest receipts passed. Startup catch-up and restart deduplication passed; enable optional scheduling with DAILY_DIGEST_TIME and DAILY_DIGEST_TIME_ZONE. The user opened the hosted UI on a phone. Hosted desktop access and a fresh two-package connected acceptance passed after user login. Repeatable video generation uses offline UI replay plus dated connected evidence. Zapier premium features currently use a trial ending2026-10-22; no paid Zapier plan was purchased.
+
+## Regenerate the portfolio video
+
+Install authoring dependencies with `npm ci --prefix media`, then run `npm run video`. This generates the two-minute MP4, captions, preview and input/output hash manifest in ignored `workspace/video/`. UI and rules are reused directly from the application; rendering sends no SaaS actions. See [video pipeline](doc/video-pipeline.md).
 
 ## Repository scope
 

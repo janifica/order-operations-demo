@@ -1,6 +1,6 @@
 # Two-minute portfolio walkthrough
 
-Preparation script, not a recording or completed acceptance report. Use the current verified mode and state its limits. Update narration only after the connected acceptance checklist passes.
+The table below guides a manual acceptance session. The repeatable annotated video uses the scene timeline in `media/src/timeline.ts`; see [video pipeline](video-pipeline.md). UI scenes are offline replay and external scenes are dated connected evidence.
 
 | Time | Screen/action | Narration and required evidence |
 |---|---|---|

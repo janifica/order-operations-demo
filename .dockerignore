@@ -10,3 +10,6 @@ assets
 coverage
 *.sqlite*
 *.db*
+
+# Video authoring is independent of the hosted application.
+media

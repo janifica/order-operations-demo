@@ -6,9 +6,20 @@ This file records knowledge for this application repository only.
 
 - Only application code, tests, synthetic fixtures, runtime documentation, and demo assets belong here. Career planning and selection rationale stay in the sibling upwork-workflow repository.
 - English product and portfolio materials; Chinese user communication.
-- Default local simulation and connected Zapier bridge implemented. Automatic intake/fulfillment/Slack receipt acceptance and protected deployment passed; scheduled catch-up/restart acceptance passed; final UI/media remain pending. Private hooks and SQLite data stay ignored in workspace/.
+- Default local simulation and connected Zapier bridge implemented. Automatic intake/fulfillment/Slack receipt acceptance and protected deployment passed; scheduled catch-up/restart acceptance passed; final UI acceptance passed; repeatable media pipeline and120-second MP4 verified; Upwork publication pending. Private hooks and SQLite data stay ignored in workspace/.
 
 ## Log
+
+### 2026-10-08 - Repeatable video pipeline and browser access resolved
+
+- Type: Decision | Change
+- Status: Active
+- Context: User requires a repeatable pipeline after UI/detail changes instead of manual agent recordings.
+- Record: Use actual Engine replay and App presentation props with no polling, not a separately maintained UI replica. Remotion consumes fixed synthetic states plus separately dated real ClickUp/Slack evidence; npm run video regenerates preview/MP4/hash manifest without SaaS actions. Media dependencies stay separate and are excluded from Docker. Hosted Chrome access passed after user login; PORTFOLIO-2001 automatically created real task z8r3fdrbht, reached COMPLETE, produced both Slack messages and five succeeded first-attempt receipts.
+- Impact: Browser blocker is resolved, superseding older blocked-access entries. Never imply video rerender reverified a real provider. Keep synthetic replay and dated provider evidence labeled.
+- References: doc/video-pipeline.md, media/scripts/pipeline.mjs, client/App.tsx
+- Verification: H.2641920×1080/30fps/3600frames/120seconds;23 inputs and output hash matched. Repeated replay inputs were identical. Chrome for Testing is pinned as the rendering mode after default Headless Shell ICU startup failure.
+
 
 ### 2026-10-08 - Mode wording and loading acceptance
 

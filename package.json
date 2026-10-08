@@ -12,7 +12,9 @@
     "dev:client": "vite --host 127.0.0.1",
     "build": "tsc -p tsconfig.server.json && tsc -p tsconfig.client.json --noEmit && vite build",
     "start": "node build/server/index.js",
-    "test": "vitest run"
+    "test": "vitest run",
+    "video": "node media/scripts/pipeline.mjs",
+    "video:check": "node media/scripts/pipeline.mjs --check"
   },
   "dependencies": {
     "@fastify/static": "^10.1.5",
