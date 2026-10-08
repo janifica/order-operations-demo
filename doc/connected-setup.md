@@ -1,10 +1,10 @@
 # Connected demo setup
 
-The connected bridge is implemented and tested with mocked transport. It has not been deployed or validated end to end. The account setup and a Zapier draft are separate evidence, not proof of this application running live.
+The connected bridge is implemented and tested with mocked transport. A protected simulation instance is deployed on Railway; connected mode has not been validated end to end. The account setup and a Zapier draft are separate evidence, not proof of this application running live.
 
 ## Required runtime
 
-Use one Node 24+ instance, a dedicated persistent SQLite file, an HTTPS public base URL and four Zapier Catch Hook endpoints. Do not run connected mode against the simulation database. The Dockerfile supplies a Node26 runtime; initial Railway build passed; a volume ownership error required a startup fix. The container initializes `/data` ownership, drops to uid/gid1000, then imports the application. Runtime acceptance remains pending. Mount persistent storage at `/data`. TLS terminates at the hosting provider. Do not run this service behind a path-rewriting proxy; preserve the original route and origin.
+Use one Node 24+ instance, a dedicated persistent SQLite file, an HTTPS public base URL and four Zapier Catch Hook endpoints. Do not run connected mode against the simulation database. The Dockerfile supplies a Node26 runtime; initial Railway build passed; a volume ownership error required a startup fix. The container initializes `/data` ownership, drops to uid/gid1000, then imports the application. Hosted API intake, duplicate detection and database persistence after restart passed; frontend and connected acceptance remain pending. Mount persistent storage at `/data`. TLS terminates at the hosting provider. Do not run this service behind a path-rewriting proxy; preserve the original route and origin.
 
 Copy `.env.example`, populate secrets privately, select `EXECUTION_MODE=connected`, and set a dedicated `DATABASE_PATH`. Never expose these variables to Vite or publish them in screenshots. Start with `node --env-file=.env build/server/index.js` after `npm run build`. Hosting platforms should inject environment variables directly. Public binding and connected mode require a 16+ character demo password; callbacks require a 32+ character receipt token.
 

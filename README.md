@@ -2,7 +2,7 @@
 
 A runnable, local-first portfolio demo for order intake, multi-package fulfillment, and operational exception handling.
 
-**Simulation by default; connected mode available.** Customers and tracking events remain synthetic. Connected mode dispatches actions to Zapier and waits for authenticated execution receipts. Account setup and a real ClickUp action test are complete; full application-to-SaaS acceptance and cloud deployment are pending. See [connected setup](doc/connected-setup.md).
+**Simulation by default; connected mode available.** Customers and tracking events remain synthetic. Connected mode dispatches actions to Zapier and waits for authenticated execution receipts. Account setup and a real ClickUp action test are complete; full application-to-SaaS acceptance remains pending. A protected simulation deployment passed API checks. See [connected setup](doc/connected-setup.md).
 
 ## Run
 
@@ -67,7 +67,7 @@ React + TypeScript + Vite frontend; Fastify + Zod API; Node's built-in SQLite mo
 
 See [architecture/API](doc/architecture.md) and [English case study](doc/case-study.md).
 
-This is a single-user demonstration. Public binding requires an access password; connected mode also requires HTTPS callbacks and a persistent database. Deployment files are prepared, but cloud deployment has not been verified. No paid subscription has been purchased.
+This is a single-user demonstration. Public binding requires an access password; connected mode also requires HTTPS callbacks and a persistent database. A protected simulation instance is deployed on Railway; health, access protection, API intake and restart persistence passed. Browser frontend acceptance is blocked by Chrome, and connected SaaS acceptance remains pending. No paid subscription has been purchased.
 
 ## Repository scope
 
