@@ -6,7 +6,7 @@ export type ShipmentStatus = 'pending' | 'in_transit' | 'delivered' | 'exception
 export type OrderStatus = ShipmentStatus | 'partially_delivered';
 export type Shipment = { id:string; orderId:string; carrier:string; trackingNumber:string; status:ShipmentStatus; lastEventAt:string|null };
 export type Order = { id:string; customer:string; email:string; total:number; createdAt:string; status:OrderStatus; shipments:Shipment[]; taskId:string|null; inputKey:string };
-export type Action = {id:string;orderId:string|null;type:string;status:'pending'|'retrying'|'succeeded'|'failed';attempts:number;maxAttempts:number;nextAttemptAt:string|null;lastError:string|null;createdAt:string;completedAt:string|null;payload:Record<string,unknown>};
+export type Action = {id:string;orderId:string|null;type:string;status:'pending'|'retrying'|'awaiting_receipt'|'succeeded'|'failed';attempts:number;maxAttempts:number;nextAttemptAt:string|null;lastError:string|null;createdAt:string;completedAt:string|null;payload:Record<string,unknown>;receiptDeadline?:string;uncertain?:boolean};
 export type Exception = {id:string;orderId:string|null;kind:string;message:string;status:'open'|'resolved';createdAt:string;actionId:string|null};
 export type Log = {id:string;orderId:string|null;type:string;message:string;createdAt:string};
 export class DomainError extends Error { constructor(public status:number,message:string){super(message);} }
@@ -23,7 +23,7 @@ export const demoOrders:OrderInput[] = [
 
 export class Engine {
  readonly db:DatabaseSync;
- constructor(path:string,readonly clock:()=>Date=()=>new Date()){
+ constructor(path:string,readonly clock:()=>Date=()=>new Date(),readonly mode:'simulation'|'connected'='simulation'){
   this.db=new DatabaseSync(path);
   this.db.exec('PRAGMA journal_mode=WAL; PRAGMA foreign_keys=ON;');
   this.db.exec(`CREATE TABLE IF NOT EXISTS orders(id TEXT PRIMARY KEY,data TEXT NOT NULL);
@@ -55,7 +55,7 @@ export class Engine {
   return this.transaction(()=>{
    const order:Order={...input,createdAt:this.now(),status:'pending',taskId:null,inputKey:key,shipments:input.shipments.map(s=>({...s,id:randomUUID(),orderId:input.id,status:'pending',lastEventAt:null}))};
    this.put('orders',order);for(const s of order.shipments)this.db.prepare('INSERT INTO shipments(id,order_id,carrier,tracking) VALUES(?,?,?,?)').run(s.id,order.id,s.carrier,s.trackingNumber);
-   this.enqueue(order.id,'create_task',{customer:order.customer});this.log(order.id,'order.created','Validated order and queued a simulated ClickUp task.');return {order,duplicate:false};
+   this.enqueue(order.id,'create_task',{customer:order.customer,status:order.status});this.log(order.id,'order.created',`Validated order and queued a ${this.mode==='simulation'?'simulated':'connected'} ClickUp task.`);return {order,duplicate:false};
   });
  }
  derive(shipments:Shipment[]):OrderStatus {
@@ -86,6 +86,7 @@ export class Engine {
   });
  }
  process(){
+  if(this.mode!=='simulation')return {processed:0};
   const eligible=this.all<Action>('actions').reverse().filter(a=>['pending','retrying'].includes(a.status)&&(!a.nextAttemptAt||a.nextAttemptAt<=this.now()));
   for(const original of eligible)this.transaction(()=>{
    const a={...original};a.attempts++;
@@ -107,12 +108,14 @@ export class Engine {
  }
  replay(id:string){
   return this.transaction(()=>{const a=this.get<Action>('actions',id);if(!a)throw new DomainError(404,'Action not found.');if(a.status!=='failed')throw new DomainError(409,'Only failed actions can be replayed.');
+   if(a.uncertain)throw new DomainError(409,'External outcome is uncertain. Reconcile in Zapier and submit a receipt before replaying; a resend may duplicate tasks or messages.');
    // In simulation, operator replay represents correcting the demo connection.
-   a.payload={...a.payload};delete a.payload.failure;a.status='pending';a.attempts=0;a.nextAttemptAt=null;a.lastError=null;this.put('actions',a);this.log(a.orderId,'action.replayed','Demo connection corrected; queued the same action ID for replay.');return {action:a};});
+   a.payload={...a.payload};delete a.payload.failure;a.status='pending';a.attempts=0;a.nextAttemptAt=null;a.lastError=null;this.put('actions',a);this.log(a.orderId,'action.replayed',this.mode==='simulation'?'Demo connection corrected; queued the same action ID for replay.':'Queued the same action ID for replay after operator correction.');return {action:a};});
  }
  seed(){let added=0;for(const input of demoOrders)if(!this.addOrder(input).duplicate)added++;return {added};}
- digest(){return this.transaction(()=>{const orders=this.all<Order>('orders');const action=this.enqueue(null,'daily_digest',{orders:orders.length,active:orders.filter(o=>o.status!=='delivered').length,exceptions:this.all<Exception>('exceptions').filter(e=>e.status==='open').length});this.log(null,'digest.queued','Queued an on-demand simulated daily operations digest.');return {action};});}
+ digest(){return this.transaction(()=>{const orders=this.all<Order>('orders');const action=this.enqueue(null,'daily_digest',{orders:orders.length,active:orders.filter(o=>o.status!=='delivered').length,exceptions:this.all<Exception>('exceptions').filter(e=>e.status==='open').length});this.log(null,'digest.queued',this.mode==='simulation'?'Queued an on-demand simulated daily operations digest.':'Queued an on-demand operations digest for the connected workflow.');return {action};});}
  scenario(name:string){
+  if(this.mode==='connected'&&(name==='retry'||name==='permanent_failure'))throw new DomainError(409,'Failure injection is available only in simulation mode.');
   this.seed();const order=this.get<Order>('orders','ORD-1042')!;
   const emit=(s:Shipment,status:string,id:string,when:string)=>this.applyEvent({id,carrier:s.carrier,trackingNumber:s.trackingNumber,status,occurredAt:when});
   const when=new Date(Math.max(this.clock().getTime(),...order.shipments.map(s=>s.lastEventAt?Date.parse(s.lastEventAt)+1000:0))).toISOString();

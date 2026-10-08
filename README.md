@@ -2,7 +2,7 @@
 
 A runnable, local-first portfolio demo for order intake, multi-package fulfillment, and operational exception handling.
 
-**Simulation only.** Customers and tracking numbers are synthetic. ClickUp tasks, Slack messages, Zapier executions, and AfterShip events are simulated locally. No external accounts are connected and no messages are sent.
+**Simulation by default; connected mode available.** Customers and tracking events remain synthetic. Connected mode dispatches actions to Zapier and waits for authenticated execution receipts. Account setup and a real ClickUp action test are complete; full application-to-SaaS acceptance and cloud deployment are pending. See [connected setup](doc/connected-setup.md).
 
 ## Run
 
@@ -63,11 +63,11 @@ Tests cover validation, CSV grouping, deduplication, ordering, multi-package sta
 
 ## Architecture
 
-React + TypeScript + Vite frontend; Fastify + Zod API; Node's built-in SQLite module; Vitest for deterministic tests. The SQLite outbox is the local automation engine. The provider simulator records stable action IDs; real provider adapters and actual Zapier flows are not implemented.
+React + TypeScript + Vite frontend; Fastify + Zod API; Node's built-in SQLite module; Vitest for deterministic tests. The SQLite outbox is the local automation engine. The provider simulator records stable action IDs. Connected mode adds a Zapier bridge with per-order sequencing, verified task IDs, authenticated receipts, and explicit handling of uncertain external outcomes.
 
 See [architecture/API](doc/architecture.md) and [English case study](doc/case-study.md).
 
-This is a loopback-only, single-user demonstration. Public hosting and authenticated inbound provider webhooks are outside this version. No cloud or SaaS subscriptions have been purchased.
+This is a single-user demonstration. Public binding requires an access password; connected mode also requires HTTPS callbacks and a persistent database. Deployment files are prepared, but cloud deployment has not been verified. No paid subscription has been purchased.
 
 ## Repository scope
 
