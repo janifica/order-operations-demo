@@ -2,7 +2,7 @@
 
 A runnable, local-first portfolio demo for order intake, multi-package fulfillment, and operational exception handling.
 
-**Simulation by default; connected mode available.** Customers and tracking events remain synthetic. Connected mode dispatches actions to Zapier and waits for authenticated execution receipts. Account setup and a real ClickUp action test are complete; full application-to-SaaS acceptance remains pending. A protected simulation deployment passed API checks. See [connected setup](doc/connected-setup.md).
+**Simulation by default; connected mode available.** Customers and tracking events remain synthetic. Connected mode dispatches actions to Zapier and waits for authenticated execution receipts. The protected Railway deployment passed automatic ClickUp task creation/completion, Slack notifications, authenticated receipts and scheduled digest catch-up/restart checks. See [connected setup](doc/connected-setup.md).
 
 ## Run
 
