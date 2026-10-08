@@ -1,0 +1,12 @@
+node_modules
+build
+dist
+.git
+.codex
+.env
+.env.*
+workspace
+assets
+coverage
+*.sqlite*
+*.db*

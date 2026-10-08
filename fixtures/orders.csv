@@ -1,0 +1,5 @@
+order_id,customer,email,total,carrier,tracking_number
+ORD-1046,"Oak, Paper & Co",oak@example.com,245.50,UPS,DEMO-UPS-1046
+ORD-1047,Harbor Workshop,harbor@example.com,580,UPS,DEMO-UPS-1047-A
+ORD-1047,Harbor Workshop,harbor@example.com,580,USPS,DEMO-USPS-1047-B
+ORD-INVALID,Example invalid row,invalid-email,30,UPS,DEMO-INVALID
