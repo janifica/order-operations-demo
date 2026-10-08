@@ -10,6 +10,15 @@ This file records knowledge for this application repository only.
 
 ## Log
 
+### 2026-10-08 - Source publication and authorized workspace cap
+
+- Type: Change
+- Status: Active
+- Context: User accepted the release plan and then authorized the proposed $10 limit after its workspace-wide effect was explained.
+- Record: Full application source published to janifica/order-operations-demo, snapshot 07212c5. Railway confirmed Compute Usage Limit $10 and an $8 alert; existing Agent limits remain unchanged. Local Git preserves both initial local and published histories via merge.
+- Impact: Hosting budget blocker resolved. The cap stops all shared projects; it does not enforce a separate $5 application allowance. Deployment and connected acceptance remain pending.
+- References: doc/release-acceptance.md, https://github.com/janifica/order-operations-demo
+
 ### 2026-10-08 - Release criteria and daily scheduling plan
 
 - Type: Decision
