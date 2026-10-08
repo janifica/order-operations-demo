@@ -12,7 +12,7 @@ Current state: local UI/domain behavior and the receipt bridge are implemented; 
 - [x] Events: repeat an event and send an older event; verify no extra provider actions and no state regression.
 - [ ] Reliability: verify definitive retry handling, missing-receipt reconciliation, restart continuity and operator recovery. Do not inject local simulator failures into connected mode.
 - [x] Daily digest: implement scheduling and persist a run key for the selected time zone. Define missed-run behavior, prevent duplicate scheduling after restart and verify a real message/receipt. Ambiguous sends must reconcile before resend.
-- [ ] UI: inspect narrow-screen layout, keyboard focus, loading/empty/error states and terminology. Record actual findings.
+- [x] UI: inspect narrow-screen layout, keyboard focus, loading/empty/error states and terminology. Record actual findings.
 - [ ] Update verification.md and case-study.md from observed evidence, then capture sanitized screenshots and a two-minute recording using demo-script.md.
 
 ## Existing stack and planned additions

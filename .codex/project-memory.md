@@ -10,6 +10,14 @@ This file records knowledge for this application repository only.
 
 ## Log
 
+### 2026-10-08 - Mode wording and loading acceptance
+
+- Type: Change
+- Status: Active
+- Record: Header previously hardcoded Local simulation in connected mode. Mode labels now follow the API result, with an explicit unknown/loading label before fetch completion. Connection errors no longer tell hosted viewers to start a local API. Local delayed-response acceptance showed the loading state; empty search and conflict error feedback passed. Four labeled simulation/connected screenshots published in assets/.
+- Impact: Final connected recording and Upwork upload remain pending because agent Chrome blocks hosted Basic-auth navigation; user phone login succeeded.
+- References: client/App.tsx, doc/verification.md, assets/README.md
+
 ### 2026-10-08 - Narrow-screen overflow correction
 
 - Type: Discovery
