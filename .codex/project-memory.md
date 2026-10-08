@@ -6,15 +6,22 @@ This file records knowledge for this application repository only.
 
 - Only application code, tests, synthetic fixtures, runtime documentation, and demo assets belong here. Career planning and selection rationale stay in the sibling upwork-workflow repository.
 - English product and portfolio materials; Chinese user communication.
-- Default local simulation and connected Zapier bridge implemented. Automatic intake/fulfillment/Slack receipt acceptance and protected deployment passed; scheduled deployment and final media remain pending. Private hooks and SQLite data stay ignored in workspace/.
+- Default local simulation and connected Zapier bridge implemented. Automatic intake/fulfillment/Slack receipt acceptance and protected deployment passed; scheduled catch-up/restart acceptance passed; final UI/media remain pending. Private hooks and SQLite data stay ignored in workspace/.
 
 ## Log
+
+### 2026-10-08 - Narrow-screen overflow correction
+
+- Type: Discovery
+- Status: Resolved
+- Record: At390px width, the absolute .sr-only table heading escaped its scroll container and expanded document width to596px. Anchoring left/top0 keeps accessibility text while restoring page width375px; table scroll remains contained. Native modal Tab and Escape passed. Hosted phone desktop-site mode is only a possibility, not verified.
+- References: client/styles.css, doc/verification.md
 
 ### 2026-10-08 - Connected fulfillment and durable daily scheduler
 
 - Type: Change
 - Status: Active
-- Record: Published fulfillment Zap uses existing ClickUp OAuth API Request PUT, with Code by Zapier JSON.stringify for safe multiline bodies. Automatic second-package update set the real task COMPLETE; ordered Slack notifications and receipts passed. Duplicate and old events queued no extra actions. Added optional DAILY_DIGEST_TIME/TIME_ZONE scheduling in the existing worker, with atomic digest_runs + action persistence, one run per zone/local date, today-only catch-up and no blind resend of failed/ambiguous actions.42 tests and build passed; hosted scheduler acceptance pending.
+- Record: Published fulfillment Zap uses existing ClickUp OAuth API Request PUT, with Code by Zapier JSON.stringify for safe multiline bodies. Automatic second-package update set the real task COMPLETE; ordered Slack notifications and receipts passed. Duplicate and old events queued no extra actions. Added optional DAILY_DIGEST_TIME/DAILY_DIGEST_TIME_ZONE scheduling in the existing worker, with atomic digest_runs + action persistence, one run per zone/local date, today-only catch-up and no blind resend of failed/ambiguous actions.42 tests and build passed; hosted catch-up/Slack receipt and confirmed restart deduplication passed.
 - Impact: No extra SaaS or dependencies. Use separate connected database; do not claim real carrier tracking. Existing intake/notification entry's fulfillment-pending state is superseded.
 - References: server/scheduler.ts, tests/scheduler.test.ts, doc/verification.md
 
