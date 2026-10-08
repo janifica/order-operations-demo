@@ -4,9 +4,9 @@ Current state: local UI/domain behavior and the receipt bridge are implemented; 
 
 ## Engineering release checklist
 
-- [ ] Publish full source, lockfile, synthetic fixtures and runtime documentation to the application repository. Current remote contains only its initial README.
+- [x] Publish full source, lockfile, synthetic fixtures and runtime documentation to https://github.com/janifica/order-operations-demo (source snapshot 07212c5).
 - [ ] Deploy one protected Node instance with HTTPS, a dedicated SQLite file and persistent storage. Verify restart durability and health checks.
-- [ ] Apply an authorized cost-control approach within the application's $5/month resource budget. Shared workspace shutdown controls need separate authorization because another project exists.
+- [x] User authorized and Railway confirmed a $10/period workspace compute hard limit with an $8 alert. The limit stops all shared projects when reached. Maintain the application's $5/month resource target; the workspace cap is not a per-project cap.
 - [ ] Intake: submit an order from Parcel, inspect one matching ClickUp task, receive its actual ID and a matching succeeded receipt. Repeat intake and verify task count.
 - [ ] Fulfillment: deliver one of two synthetic packages, then the other; verify partial/completed state, real task updates, Slack messages and receipts.
 - [ ] Events: repeat an event and send an older event; verify no extra provider actions and no state regression.
