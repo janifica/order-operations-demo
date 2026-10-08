@@ -12,6 +12,6 @@ COPY package*.json ./
 RUN npm ci --omit=dev && mkdir /data && chown node:node /data
 COPY --from=build /app/build ./build
 COPY --from=build /app/dist ./dist
-USER node
+COPY scripts/container-entrypoint.mjs ./scripts/container-entrypoint.mjs
 EXPOSE 4310
-CMD ["node", "build/server/index.js"]
+CMD ["node", "scripts/container-entrypoint.mjs"]
