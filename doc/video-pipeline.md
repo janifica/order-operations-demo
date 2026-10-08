@@ -8,7 +8,7 @@ npm ci --prefix media
 npm run video
 ```
 
-Outputs are ignored under `workspace/video/`: `parcel-portfolio.mp4`, `preview.png`, `captions.srt`, and `manifest.json`. The composition is 1920×1080, 30 fps, 90 seconds, H.264. No external SaaS account or credential is required for regeneration. `npm run video:check` regenerates inputs and runs TypeScript checks without encoding the video; its report is `input-check.json`, so it does not replace the last completed render manifest. The first render downloads isolated Chrome for Testing; later runs reuse it. This macOS environment's default Headless Shell failed ICU initialization, so the checked-in config selects Chrome for Testing.
+Outputs are ignored under `workspace/video/`: `parcel-portfolio.mp4`, `preview.png`, `captions.srt`, and `manifest.json`. The composition is 1920×1080, 30 fps, 60 seconds, H.264. No external SaaS account or credential is required for regeneration. `npm run video:check` regenerates inputs and runs TypeScript checks without encoding the video; its report is `input-check.json`, so it does not replace the last completed render manifest. The first render downloads isolated Chrome for Testing; later runs reuse it. This macOS environment's default Headless Shell failed ICU initialization, so the checked-in config selects Chrome for Testing.
 
 ## Inputs and stages
 
@@ -27,8 +27,10 @@ This is an annotated generated walkthrough, not a continuous live screen recordi
 
 ## Motion design
 
-The current90-second cut introduces CSV→ClickUp→Slack immediately, shows dated ClickUp evidence from8s and Slack from16s, then moves through intake, package logic and duplicate protection. Its close proposes a small CSV-based pilot and existing handoff artifacts. This addresses expression/pacing feedback; it does not add a new observed connected run.
+The current60-second cut introduces CSV→ClickUp→Slack immediately, shows dated ClickUp evidence from5s and Slack from11s, then moves through intake, package logic and duplicate protection. Its close proposes a small CSV-based pilot and existing handoff artifacts. This addresses expression/pacing feedback; it does not add a new observed connected run.
 
 The video uses short headlines instead of explanatory paragraphs. Frame-driven spring entrances, animated CSV grouping, package cards,0→1→2 progress, duplicate/stale rejection, traveling workflow dots and focused camera moves communicate the behavior. Counters derive from replay data; package scenes switch between actual Engine snapshots. Graphic cards are explanatory overlays rather than replicas of provider UI. ClickUp/Slack screenshots remain dated historical evidence, with camera motion around their actual content.
 
-Edit animation timing in the corresponding `media/src/scenes/*.tsx`; shared motion helpers live in `motion.tsx`. Scene IDs, rather than array positions, select components, so timeline ordering remains editable. All motion is driven by frame numbers; CSS animations and random render-time values are avoided. Sound cue generation, subtitles, duration metadata and preview selection follow the timeline. The former120-second motion cut is kept locally as parcel-portfolio-v2-120s.mp4. Scene backgrounds stay opaque at cuts to avoid whole-frame black gaps.
+Edit animation timing in the corresponding `media/src/scenes/*.tsx`; shared motion helpers live in `motion.tsx`. Scene IDs, rather than array positions, select components, so timeline ordering remains editable. All motion is driven by frame numbers; CSS animations and random render-time values are avoided. Sound cue generation, subtitles, duration metadata and preview selection follow the timeline. The former90-second cut is kept locally as parcel-portfolio-v3-90s.mp4; the120-second motion cut is kept locally as parcel-portfolio-v2-120s.mp4. Scene backgrounds stay opaque at cuts to avoid whole-frame black gaps.
+
+The60s cut accelerates CSV grouping1.5× and brings overview/outro/evidence entrances forward, keeping package arrival cues and subtitle timing synchronized. Timeline arrivalSeconds controls the original sound cues; replay validation requires at least one second between a cue and its scene end. Scene durations and the MP4 metadata are generated from the timeline, rather than a fixed60s constant.

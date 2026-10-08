@@ -18,7 +18,8 @@ const stale=engine.applyEvent({...event,id:'VIDEO-STALE',status:'in_transit',occ
 if(duplicate.accepted||stale.accepted||before!==engine.all('actions').length)throw Error('Reliability replay failed');
 save('reliability');engine.close();
 if(snapshots.partial.orders.find(o=>o.id==='PORTFOLIO-2001')?.status!=='partially_delivered'||snapshots.complete.orders.find(o=>o.id==='PORTFOLIO-2001')?.status!=='delivered')throw Error('Package aggregation replay failed');
-if(scenes.some(scene=>!Number.isFinite(scene.seconds)||scene.seconds<8)||!Number.isInteger(duration))throw Error('Each scene needs at least eight seconds and an integer frame duration');
+if(scenes.some(scene=>!Number.isFinite(scene.seconds)||scene.seconds<4)||!Number.isInteger(duration))throw Error('Each scene needs at least four seconds and an integer frame duration');
+if(scenes.some(scene=>'arrivalSeconds' in scene&&(!Number.isFinite(scene.arrivalSeconds)||scene.arrivalSeconds>scene.seconds-1)))throw Error('Delivery cue needs at least one second of readable outcome');
 const ids=new Map<string,string>();const raw=JSON.stringify({csv,snapshots,scenes,duration,fps});
 const normalized=raw.replace(/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/g,id=>{if(!ids.has(id))ids.set(id,`REPLAY-${String(ids.size+1).padStart(3,'0')}`);return ids.get(id)!;});
 mkdirSync('media/public/generated',{recursive:true});writeFileSync('media/public/generated/replay.json',normalized+'\n');

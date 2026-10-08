@@ -6,9 +6,19 @@ This file records knowledge for this application repository only.
 
 - Only application code, tests, synthetic fixtures, runtime documentation, and demo assets belong here. Career planning and selection rationale stay in the sibling upwork-workflow repository.
 - English product and portfolio materials; Chinese user communication.
-- Default local simulation and connected Zapier bridge implemented. Automatic intake/fulfillment/Slack receipt acceptance and protected deployment passed; scheduled catch-up/restart acceptance passed; final UI acceptance passed; repeatable media pipeline and90-second MP4 verified; Upwork publication pending. Private hooks and SQLite data stay ignored in workspace/.
+- Default local simulation and connected Zapier bridge implemented. Automatic intake/fulfillment/Slack receipt acceptance and protected deployment passed; scheduled catch-up/restart acceptance passed; final UI acceptance passed; repeatable media pipeline and60-second MP4 verified; Upwork publication pending. Private hooks and SQLite data stay ignored in workspace/.
 
 ## Log
+
+### 2026-10-08 - One-minute portfolio cut
+
+- Type: Constraint | Change
+- Status: Active
+- Context: User requests a60s alternative to the90s cut.
+- Record:60s/1800-frame timeline; dated real evidence from5s/11s. CSV grouping accelerated1.5× with matching cue, shorter overview entrances, faster evidence camera and earlier outro CTA. Validate cue times against scene endings. Preserve90s cut in ignored workspace as parcel-portfolio-v3-90s.mp4.
+- Verification: H.264/AAC1080p30 export,1800 frames,60.011s container,12,938,603 bytes; all37 input hashes and output hash match. Intake frame inspected;42 tests, production build and media types passed.
+- References: media/src/timeline.ts, media/scripts/sound.mjs, doc/video-pipeline.md
+
 
 ### 2026-10-08 - Faster buyer-oriented cut
 
