@@ -30,7 +30,7 @@ See [verification](verification.md) for the scope of each check. All logistics e
 
 ## Delivery package
 
-React/TypeScript console, Fastify API, persistent SQLite outbox, synthetic fixtures, tests and [connection/maintenance instructions](connected-setup.md). The [two-minute walkthrough](demo-script.md) specifies the evidence to capture before publication.
+React/TypeScript console, Fastify API, persistent SQLite outbox, synthetic fixtures, tests and [connection/maintenance instructions](connected-setup.md). The [manual walkthrough](demo-script.md) specifies the evidence to capture before publication.
 
 This is an independent demonstration, not previous client work. Client revenue, adoption and time savings have not been measured. The owner should describe their actual decisions and AI-assisted contribution when presenting it.
 

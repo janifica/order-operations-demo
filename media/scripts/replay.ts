@@ -1,6 +1,6 @@
 import {writeFileSync,mkdirSync} from 'node:fs';
 import {Engine} from '../../server/engine';
-import {scenes,duration} from '../src/timeline';
+import {scenes,duration,fps} from '../src/timeline';
 let now=new Date('2026-10-08T11:00:00.000Z');
 const engine=new Engine(':memory:',()=>now,'simulation');
 const snapshots:Record<string,ReturnType<Engine['overview']>>={};
@@ -18,8 +18,8 @@ const stale=engine.applyEvent({...event,id:'VIDEO-STALE',status:'in_transit',occ
 if(duplicate.accepted||stale.accepted||before!==engine.all('actions').length)throw Error('Reliability replay failed');
 save('reliability');engine.close();
 if(snapshots.partial.orders.find(o=>o.id==='PORTFOLIO-2001')?.status!=='partially_delivered'||snapshots.complete.orders.find(o=>o.id==='PORTFOLIO-2001')?.status!=='delivered')throw Error('Package aggregation replay failed');
-if(duration!==3600)throw Error('Timeline must remain two minutes; update encoding metadata if changing duration');
-const ids=new Map<string,string>();const raw=JSON.stringify({csv,snapshots,scenes,duration});
+if(scenes.some(scene=>!Number.isFinite(scene.seconds)||scene.seconds<8)||!Number.isInteger(duration))throw Error('Each scene needs at least eight seconds and an integer frame duration');
+const ids=new Map<string,string>();const raw=JSON.stringify({csv,snapshots,scenes,duration,fps});
 const normalized=raw.replace(/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/g,id=>{if(!ids.has(id))ids.set(id,`REPLAY-${String(ids.size+1).padStart(3,'0')}`);return ids.get(id)!;});
 mkdirSync('media/public/generated',{recursive:true});writeFileSync('media/public/generated/replay.json',normalized+'\n');
 console.log('Replay passed: intake, partial/full aggregation, duplicate/stale rejection, unchanged action count.');

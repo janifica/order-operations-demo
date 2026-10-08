@@ -1,6 +1,6 @@
 # Release acceptance
 
-Current state: local UI/domain behavior and the receipt bridge are implemented; 42 tests and production build passed. Protected deployment and automatic connected intake/fulfillment/Slack receipts passed. Scheduled catch-up/restart and hosted desktop UI acceptance passed; repeatable 120-second H.264 video export passed. Upwork publication remains pending.
+Current state: local UI/domain behavior and the receipt bridge are implemented; 42 tests and production build passed. Protected deployment and automatic connected intake/fulfillment/Slack receipts passed. Scheduled catch-up/restart and hosted desktop UI acceptance passed; repeatable 90-second H.264 video export passed. Upwork publication remains pending.
 
 ## Engineering release checklist
 
@@ -13,7 +13,7 @@ Current state: local UI/domain behavior and the receipt bridge are implemented; 
 - [ ] Reliability: verify definitive retry handling, missing-receipt reconciliation, restart continuity and operator recovery. Do not inject local simulator failures into connected mode.
 - [x] Daily digest: implement scheduling and persist a run key for the selected time zone. Define missed-run behavior, prevent duplicate scheduling after restart and verify a real message/receipt. Ambiguous sends must reconcile before resend.
 - [x] UI: inspect narrow-screen layout, keyboard focus, loading/empty/error states and terminology. Record actual findings.
-- [x] Update verification documentation, capture sanitized connected screenshots, and generate a two-minute annotated video with the repeatable pipeline. Offline UI replay and dated provider evidence are labeled separately.
+- [x] Update verification documentation, capture sanitized connected screenshots, and generate a 90-second annotated video with the repeatable pipeline. Offline UI replay and dated provider evidence are labeled separately.
 
 ## Existing stack and planned additions
 

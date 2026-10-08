@@ -6,9 +6,20 @@ This file records knowledge for this application repository only.
 
 - Only application code, tests, synthetic fixtures, runtime documentation, and demo assets belong here. Career planning and selection rationale stay in the sibling upwork-workflow repository.
 - English product and portfolio materials; Chinese user communication.
-- Default local simulation and connected Zapier bridge implemented. Automatic intake/fulfillment/Slack receipt acceptance and protected deployment passed; scheduled catch-up/restart acceptance passed; final UI acceptance passed; repeatable media pipeline and120-second MP4 verified; Upwork publication pending. Private hooks and SQLite data stay ignored in workspace/.
+- Default local simulation and connected Zapier bridge implemented. Automatic intake/fulfillment/Slack receipt acceptance and protected deployment passed; scheduled catch-up/restart acceptance passed; final UI acceptance passed; repeatable media pipeline and90-second MP4 verified; Upwork publication pending. Private hooks and SQLite data stay ignored in workspace/.
 
 ## Log
+
+### 2026-10-08 - Faster buyer-oriented cut
+
+- Type: Constraint | Change
+- Status: Active
+- Context: User accepts the independent buyer critique and asks for a slightly faster pace.
+- Record:90s timeline, concrete CSV→ClickUp→Slack opening, real dated evidence moved to8s/16s, shorter state holds and scoped-pilot/handoff close. Dynamic duration/fps metadata replaces the fixed120s assumption. Preview selection and sounds follow reordered scenes; backgrounds remain opaque across cuts. Preserve the120s motion version in ignored workspace for comparison.
+- Impact: Expression changes do not resolve the buyer's end-to-end continuous-proof gap; do not imply a fresh SaaS run. Regenerate using the same npm run video command.
+- Verification:2700-frame/90s video (90.005s container),37 source/output hashes, intro/outro previews and encoded8s cut checked;42 tests/build/media types passed. Bundled FFmpeg lacks blackdetect; no whole-video black scan claimed.
+- References: media/src/timeline.ts, doc/video-pipeline.md, workspace/video/client-review/review.md
+
 
 ### 2026-10-08 - Motion-led portfolio video
 

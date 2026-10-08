@@ -20,9 +20,9 @@ const replay=JSON.parse(readFileSync('media/public/generated/replay.json','utf8'
 const stamp=seconds=>new Date(seconds*1000).toISOString().slice(11,19)+',000';
 let elapsed=0;
 writeFileSync('workspace/video/captions.srt',replay.scenes.map((scene,index)=>{const start=elapsed;elapsed+=scene.seconds;return `${index+1}\n${stamp(start)} --> ${stamp(elapsed)}\n${scene.title}\n${scene.caption}\n`;}).join('\n'));
-const manifest={generatedAt:new Date().toISOString(),rendered:false,captureDate:'2026-10-08',captureTimeZone:'Asia/Shanghai',externalActions:false,dimensions:[1920,1080],fps:30,frames:3600,seconds:120,inputs:Object.fromEntries(inputs.map(path=>[relative(root,path),hash(path)]))};
+const manifest={generatedAt:new Date().toISOString(),rendered:false,captureDate:'2026-10-08',captureTimeZone:'Asia/Shanghai',externalActions:false,dimensions:[1920,1080],fps:replay.fps,frames:replay.duration,seconds:replay.duration/replay.fps,inputs:Object.fromEntries(inputs.map(path=>[relative(root,path),hash(path)]))};
 if(!process.argv.includes('--check')){
- run('npx',['remotion','still','Parcel','../workspace/video/preview.png','--frame=1450'],resolve(root,'media'));
+ run('npx',['remotion','still','Parcel','../workspace/video/preview.png',`--frame=${(replay.scenes.slice(0,replay.scenes.findIndex(s=>s.id==='partial')).reduce((n,s)=>n+s.seconds,0)+5)*replay.fps}`],resolve(root,'media'));
  run('npx',['remotion','render','Parcel','../workspace/video/candidate.mp4','--codec=h264','--crf=20','--concurrency=2'],resolve(root,'media'));
  const output=resolve('workspace/video/candidate.mp4');if(!existsSync(output)||readFileSync(output).length<10000)throw Error('Render output missing or empty');manifest.rendered=true;manifest.outputSha256=hash(output);renameSync(output,'workspace/video/parcel-portfolio.mp4');
 }

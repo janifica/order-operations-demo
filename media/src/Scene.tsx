@@ -6,7 +6,7 @@ export type Replay={csv:string;snapshots:Record<string,Overview>};
 export type SceneProps={replay:Replay};
 export function Frame({id,children,dark=false}:{id:typeof scenes[number]['id'];children:ReactNode;dark?:boolean}){
  const index=scenes.findIndex(s=>s.id===id),scene=scenes[index],f=useCurrentFrame();
- return <AbsoluteFill style={{background:dark?'#123535':'#f3f5ed',color:dark?'#f3f5ed':'#173e3d',fontFamily:'Arial,sans-serif',overflow:'hidden',opacity:interpolate(f,[0,10,scene.seconds*30-10,scene.seconds*30],[0,1,1,0],{extrapolateLeft:'clamp',extrapolateRight:'clamp'})}}>
+ return <AbsoluteFill style={{background:dark?'#123535':'#f3f5ed',color:dark?'#f3f5ed':'#173e3d',fontFamily:'Arial,sans-serif',overflow:'hidden'}}>
  <div style={{position:'absolute',width:750,height:750,right:-190,top:-380,borderRadius:'50%',background:dark?'#b9edc909':'#b9edc930',translate:`${Math.sin(f/100)*40}px ${Math.cos(f/110)*35}px`}}/>
  <div style={{position:'absolute',top:58,left:76,fontSize:22,letterSpacing:4,opacity:.65}}>PARCEL / ORDER OPERATIONS</div>
  <h1 style={{position:'absolute',top:108,left:72,fontFamily:'Arial,sans-serif',fontSize:82,lineHeight:1.06,letterSpacing:-3,margin:0,translate:`0px ${interpolate(f,[0,22],[36,0],{extrapolateRight:'clamp'})}px`,opacity:interpolate(f,[0,18],[0,1],{extrapolateRight:'clamp'})}}>{scene.title}</h1>

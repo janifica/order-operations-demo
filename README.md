@@ -71,7 +71,7 @@ This is a single-user demonstration. Public binding requires an access password;
 
 ## Regenerate the portfolio video
 
-Install authoring dependencies with `npm ci --prefix media`, then run `npm run video`. This generates the two-minute MP4, captions, preview and input/output hash manifest in ignored `workspace/video/`. UI and rules are reused directly from the application; rendering sends no SaaS actions. See [video pipeline](doc/video-pipeline.md).
+Install authoring dependencies with `npm ci --prefix media`, then run `npm run video`. This generates the 90-second MP4, captions, preview and input/output hash manifest in ignored `workspace/video/`. UI and rules are reused directly from the application; rendering sends no SaaS actions. See [video pipeline](doc/video-pipeline.md).
 
 ## Repository scope
 

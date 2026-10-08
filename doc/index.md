@@ -6,7 +6,7 @@
 - [Release acceptance](release-acceptance.md): engineering completion criteria and pending release work.
 - [Verification](verification.md): test evidence and remaining limits.
 - [Video pipeline](video-pipeline.md): repeatable offline UI replay, dated connected evidence and rendering command.
-- [Demonstration script](demo-script.md): two-minute walkthrough, evidence captures and publication checks.
+- [Demonstration script](demo-script.md): manual walkthrough, evidence captures and publication checks.
 - [Case study](case-study.md): truthful English portfolio description.
 
 Career planning is maintained in the sibling upwork-workflow repository.
