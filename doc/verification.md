@@ -11,3 +11,11 @@ Verified locally on 2026-10-08 with Node.js 26.3.0.
 Connected bridge tests use a mocked transport and cover receipt waiting, task-ID validation, duplicate receipts, stale attempts, uncertain outcomes, capped retries, sequencing, worker replacement, endpoint validation and HTTP access controls.
 
 A separate real Zapier action test created a synthetic fulfillment task in the dedicated ClickUp demo list; the task was verified in ClickUp. This is not yet evidence of the complete application-to-Zapier-to-receipt workflow. Slack workflow remains a draft. All tracking events remain synthetic. No cloud deployment or container execution has been validated (Docker is unavailable locally).
+
+## Railway deployment acceptance (2026-10-08)
+
+Source 955a0f4 built and started on Railway with one replica, `/data` persistent volume, `/health` check, and HTTPS at https://order-operations-demo-production.up.railway.app. Workspace compute cap $10/period and $8 alert saved with user authorization.
+
+Unauthenticated health returned200; operational access returned401. Authenticated order intake returned200 and repeated intake marked duplicate. Synthetic DEPLOY-RESTART-001 remained readable after a confirmed container restart (startup log16:02:40 Shanghai). This is hosted simulation evidence, not connected ClickUp/Slack acceptance.
+
+Browser navigation to the protected homepage was blocked by Chrome (ERR_BLOCKED_BY_CLIENT). Frontend acceptance and the reason for that browser block remain unresolved. No browser protection was disabled.

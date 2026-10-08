@@ -10,6 +10,15 @@ This file records knowledge for this application repository only.
 
 ## Log
 
+### 2026-10-08 - Protected Railway simulation deployment
+
+- Type: Change
+- Status: Active
+- Context: Continue deployment after the workspace cost cap was approved and saved.
+- Record: Source955a0f4 deployed with one replica, /data volume and /health. Railway root-owned volume initially blocked SQLite; container bootstrap now chowns /data, drops groups/gid/uid to node1000, then imports the app. Health200, unauthenticated operational401, intake/dedup and restart persistence passed.
+- Impact: Hosted simulation is available; connected mode remains pending and must use a separate database. Browser homepage navigation is blocked by Chrome ERR_BLOCKED_BY_CLIENT; frontend acceptance is unresolved. Do not weaken browser protections to bypass it. Secrets and service identifiers remain in ignored workspace files.
+- References: scripts/container-entrypoint.mjs, Dockerfile, doc/verification.md
+
 ### 2026-10-08 - Source publication and authorized workspace cap
 
 - Type: Change
