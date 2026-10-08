@@ -32,7 +32,8 @@ export class Engine {
    CREATE TABLE IF NOT EXISTS actions(id TEXT PRIMARY KEY,data TEXT NOT NULL);
    CREATE TABLE IF NOT EXISTS exceptions(id TEXT PRIMARY KEY,data TEXT NOT NULL);
    CREATE TABLE IF NOT EXISTS logs(id TEXT PRIMARY KEY,data TEXT NOT NULL);
-   CREATE TABLE IF NOT EXISTS provider_records(id TEXT PRIMARY KEY,data TEXT NOT NULL);`);
+   CREATE TABLE IF NOT EXISTS provider_records(id TEXT PRIMARY KEY,data TEXT NOT NULL);
+   CREATE TABLE IF NOT EXISTS digest_runs(id TEXT PRIMARY KEY,data TEXT NOT NULL);`);
  }
  now(){return this.clock().toISOString();}
  close(){this.db.close();}
@@ -113,7 +114,15 @@ export class Engine {
    a.payload={...a.payload};delete a.payload.failure;a.status='pending';a.attempts=0;a.nextAttemptAt=null;a.lastError=null;this.put('actions',a);this.log(a.orderId,'action.replayed',this.mode==='simulation'?'Demo connection corrected; queued the same action ID for replay.':'Queued the same action ID for replay after operator correction.');return {action:a};});
  }
  seed(){let added=0;for(const input of demoOrders)if(!this.addOrder(input).duplicate)added++;return {added};}
- digest(){return this.transaction(()=>{const orders=this.all<Order>('orders');const action=this.enqueue(null,'daily_digest',{orders:orders.length,active:orders.filter(o=>o.status!=='delivered').length,exceptions:this.all<Exception>('exceptions').filter(e=>e.status==='open').length});this.log(null,'digest.queued',this.mode==='simulation'?'Queued an on-demand simulated daily operations digest.':'Queued an on-demand operations digest for the connected workflow.');return {action};});}
+ digest(schedule?:{runKey:string;date:string;timeZone:string}){return this.transaction(()=>{
+  const existing=schedule?this.get<{actionId:string}>('digest_runs',schedule.runKey):undefined;
+  if(existing)return {action:this.get<Action>('actions',existing.actionId)!,duplicate:true};
+  const orders=this.all<Order>('orders');
+  const action=this.enqueue(null,'daily_digest',{orders:orders.length,active:orders.filter(o=>o.status!=='delivered').length,exceptions:this.all<Exception>('exceptions').filter(e=>e.status==='open').length,...(schedule?{scheduledFor:schedule.date,timeZone:schedule.timeZone}:{} )});
+  if(schedule)this.put('digest_runs',{id:schedule.runKey,actionId:action.id,queuedAt:this.now()});
+  this.log(null,schedule?'digest.scheduled':'digest.queued',schedule?`Scheduled daily digest for ${schedule.date} (${schedule.timeZone}).`:this.mode==='simulation'?'Queued an on-demand simulated daily operations digest.':'Queued an on-demand operations digest for the connected workflow.');
+  return {action,duplicate:false};
+ });}
  scenario(name:string){
   if(this.mode==='connected'&&(name==='retry'||name==='permanent_failure'))throw new DomainError(409,'Failure injection is available only in simulation mode.');
   this.seed();const order=this.get<Order>('orders','ORD-1042')!;

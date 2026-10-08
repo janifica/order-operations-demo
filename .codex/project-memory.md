@@ -6,9 +6,27 @@ This file records knowledge for this application repository only.
 
 - Only application code, tests, synthetic fixtures, runtime documentation, and demo assets belong here. Career planning and selection rationale stay in the sibling upwork-workflow repository.
 - English product and portfolio materials; Chinese user communication.
-- Default local simulation and connected Zapier bridge implemented. Full connected acceptance and deployment remain pending. Private hooks and SQLite data stay ignored in workspace/.
+- Default local simulation and connected Zapier bridge implemented. Automatic intake/fulfillment/Slack receipt acceptance and protected deployment passed; scheduled deployment and final media remain pending. Private hooks and SQLite data stay ignored in workspace/.
 
 ## Log
+
+### 2026-10-08 - Connected fulfillment and durable daily scheduler
+
+- Type: Change
+- Status: Active
+- Record: Published fulfillment Zap uses existing ClickUp OAuth API Request PUT, with Code by Zapier JSON.stringify for safe multiline bodies. Automatic second-package update set the real task COMPLETE; ordered Slack notifications and receipts passed. Duplicate and old events queued no extra actions. Added optional DAILY_DIGEST_TIME/TIME_ZONE scheduling in the existing worker, with atomic digest_runs + action persistence, one run per zone/local date, today-only catch-up and no blind resend of failed/ambiguous actions.42 tests and build passed; hosted scheduler acceptance pending.
+- Impact: No extra SaaS or dependencies. Use separate connected database; do not claim real carrier tracking. Existing intake/notification entry's fulfillment-pending state is superseded.
+- References: server/scheduler.ts, tests/scheduler.test.ts, doc/verification.md
+
+
+### 2026-10-08 - Automatic connected intake and notification publication
+
+- Type: Change
+- Status: Active
+- Context: User supplied a successful phone login screenshot; continue real workflow acceptance.
+- Record: Switched runtime to connected mode with a separate persistent database. Published intake Zap v1; CONNECTED-AUTO-002 automatically created a real ClickUp task, stored its ID and succeeded receipt; duplicate intake produced no extra action. Notifications Zap v1 passed Slack message and receipt setup tests. The phone screenshot verifies frontend access, though agent Chrome still blocks Basic-auth navigation.
+- Impact: Order creation is connected and verified. Native ClickUp Update Task currently lacks a visible status field; investigate its authenticated API Request action. Fulfillment acceptance and scheduled digest remain pending. Zapier premium trial ends2026-10-22; no paid plan approved or bought.
+- References: doc/verification.md, doc/connected-setup.md
 
 ### 2026-10-08 - Protected Railway simulation deployment
 

@@ -21,7 +21,7 @@ All endpoints return JSON. Error {error:string,details?:unknown}.
 - POST /api/demo/scenario {scenario:'delivery'|'duplicate'|'retry'|'permanent_failure'|'out_of_order'} -> {message:string}; explicit demo helper; selects seeded order as needed. Duplicate/late event scenarios require existing delivered demo shipment (server ensures this). Retry scenario enqueues a simulated timeout then retry; permanent failure produces failed action requiring resolve/replay.
 - POST /api/actions/process {} -> {processed:number}; runs eligible queue items, worker also runs automatically.
 - POST /api/actions/:id/replay {} -> {action}; failed actions only. Reset attempts and retry the same ID, resolve associated action exception after success.
-- POST /api/digest {} -> {action}; simulated daily digest on demand (no actual timed external sends).
+- POST /api/digest {} -> {action}; on-demand digest; dispatch follows the selected execution mode.
 
 ## Reliability
 
@@ -31,7 +31,7 @@ SQLite transactions atomically persist order/event changes and outbox actions. E
 
 `server/bridge.ts` dispatches persisted actions to approved Zapier Catch Hook endpoints. HTTP acceptance is not success: actions wait for POST /api/integrations/receipt with a secret Bearer token, matching action ID and attempt. Real task IDs are recorded only from verified receipts. Uncertain network outcomes or receipt timeouts require reconciliation before replay. Authenticated duplicate receipts are idempotent. Actions for each order run in sequence. See [connected setup](connected-setup.md) for configuration and boundaries.
 
-Public UI/API access uses Basic authentication behind HTTPS. Receipt authorization is separate. Cross-origin writes are rejected. One server and a persistent volume are required. Actual carrier tracking, multi-user access and scheduled digests are outside this version. Cloud deployment and full SaaS acceptance remain pending.
+Public UI/API access uses Basic authentication behind HTTPS. Receipt authorization is separate. Cross-origin writes are rejected. One server and a persistent volume are required. Actual carrier tracking and multi-user access are outside this version. Railway deployment, automatic task creation, two-package task completion and Slack notifications have passed real acceptance.
 
 ## Implemented components
 
@@ -47,4 +47,8 @@ flowchart LR
   Fail --> UI
 ```
 
-`server/engine.ts` implements transactions, import, event processing and the worker; `server/app.ts` exposes the API; `server/index.ts` seeds fixtures and runs the worker, serving the built UI when dist exists. `client/App.tsx` includes synthetic event controls for any order. The simulator is not a real Zapier execution engine.
+`server/scheduler.ts` schedules optional daily digests. `server/engine.ts` implements transactions, import, event processing and the worker; `server/app.ts` exposes the API; `server/index.ts` seeds fixtures and runs the worker, serving the built UI when dist exists. `client/App.tsx` includes synthetic event controls for any order. The simulator is not a real Zapier execution engine.
+
+## Daily schedule
+
+Set `DAILY_DIGEST_TIME=09:00` and `DAILY_DIGEST_TIME_ZONE=Asia/Shanghai` to enable scheduling; unset the time to disable it. The existing worker checks local wall-clock time. After the chosen time, it atomically saves the digest action and a `digest_runs` record keyed by time zone and local date. Restarts, repeated polls and daylight-saving repeated hours reuse that action. On startup after the time, only today is caught up; past dates are not backfilled. Changing the time within the same local date does not create another run. Failed or uncertain sends retain their action and follow the existing reconciliation rules. This guarantees one scheduled enqueue per date, not exactly-once external delivery.

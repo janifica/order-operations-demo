@@ -20,13 +20,13 @@ Parcel models these situations in an operations console: order intake, package p
 
 | Evidence | Current result |
 |---|---|
-| Automated domain, bridge and HTTP checks | 35 tests passed; production build passed |
+| Automated domain, bridge and HTTP checks | 42 tests passed; production build passed |
 | Local browser walkthrough | Partial/full delivery, ignored events, CSV validation and simulated recovery verified |
-| Separate Zapier → ClickUp action test | A real task containing synthetic order data was created and inspected in the dedicated demo list |
-| Full app → Zapier → provider → receipt workflow | Pending deployment and end-to-end acceptance |
+| Full app → Zapier → ClickUp/Slack → receipt | Automatic task creation, two-package completion and channel notifications passed on Railway |
+| Daily schedule | Restart-safe implementation and local tests passed; hosted scheduled acceptance pending |
 | Real carrier tracking | Not included; shipment events are synthetic |
 
-See [verification](verification.md) for the scope of each check. A separate provider action test does not establish that the full connected workflow works.
+See [verification](verification.md) for the scope of each check. All logistics events and customers in these runs are synthetic.
 
 ## Delivery package
 
@@ -36,4 +36,4 @@ This is an independent demonstration, not previous client work. Client revenue, 
 
 ## Short portfolio summary
 
-Parcel is a personal order-operations demo that tracks multi-package delivery and exposes queued actions, retries and exceptions. It includes a receipt-based Zapier bridge and a separately verified ClickUp task-creation test; full connected acceptance is still pending. All customer and shipment data is synthetic.
+Parcel is a personal order-operations demo that tracks multi-package delivery and exposes queued actions, retries and exceptions. Its deployed Zapier bridge creates and updates real ClickUp tasks and posts real Slack notifications, with authenticated execution receipts. All customer and shipment data is synthetic.
