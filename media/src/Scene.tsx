@@ -1,19 +1,18 @@
-import {AbsoluteFill,Img,interpolate,staticFile,useCurrentFrame} from 'remotion';
-import App,{type Overview} from '../../client/App';
+import {AbsoluteFill,interpolate,useCurrentFrame} from 'remotion';
+import type {ReactNode} from 'react';
+import type {Overview} from '../../client/App';
 import {scenes} from './timeline';
 export type Replay={csv:string;snapshots:Record<string,Overview>};
-export const Scene=({index,replay}:{index:number;replay:Replay})=>{
- const scene=scenes[index],frame=useCurrentFrame();
- const opacity=interpolate(frame,[0,12,scene.seconds*30-12,scene.seconds*30],[0,1,1,0],{extrapolateLeft:'clamp',extrapolateRight:'clamp'});
- const ui=scene.kind==='ui';const evidence=scene.kind==='evidence';
- return <AbsoluteFill style={{background:'#f5f6f0',color:'#183c3d',fontFamily:'Arial, sans-serif',opacity,padding:64}}>
- <div style={{fontSize:24,letterSpacing:4,marginBottom:18}}>PARCEL / PERSONAL PORTFOLIO DEMO</div>
- <h1 style={{fontFamily:'Arial, sans-serif',fontSize:68,lineHeight:1.08,margin:0,maxWidth:1770}}>{scene.title}</h1>
- <p style={{fontSize:32,lineHeight:1.35,maxWidth:1750,margin:'20px 0 0'}}>{scene.caption}</p>
- {ui&&<div className="video-ui" style={{position:'absolute',left:64,top:280,width:1792,height:700,overflow:'hidden',border:'1px solid #d9ded5',borderRadius:14,boxShadow:'0 12px 35px #163c3c15'}}><div style={{width:1792,height:900,position:'relative',pointerEvents:'none'}}><App presentation={{overview:replay.snapshots[scene.snapshot],view:'view' in scene?scene.view:undefined,orderId:'orderId' in scene?scene.orderId:undefined,modal:'modal' in scene?scene.modal:undefined,csv:replay.csv}}/></div></div>}
- {evidence&&<Img src={staticFile(scene.image)} style={{position:'absolute',left:64,top:280,width:1792,height:700,objectFit:'contain',borderRadius:12,background:'#e8ece5'}}/>}
- {(scene.kind==='intro'||scene.kind==='outro')&&<div style={{position:'absolute',top:390,left:90,right:90,padding:60,background:'#193e3f',color:'#f5f6f0',borderRadius:22}}><div style={{fontSize:78,lineHeight:1.18,fontWeight:700}}>{scene.kind==='intro'?'Intake → Package progress → Fulfillment':'Source, tests and workflow documentation.'}</div><p style={{fontSize:37,lineHeight:1.5,marginBottom:0}}>{scene.kind==='intro'?'Automatic video replay uses the real app UI and domain engine. Separate dated captures show the verified SaaS integration.':'github.com/janifica/order-operations-demo'}</p><p style={{fontSize:30,lineHeight:1.4,color:'#c6d6ca'}}>Synthetic logistics. No live carrier tracking. No client performance claims.</p></div>}
- <div style={{position:'absolute',bottom:36,left:64,fontSize:23,letterSpacing:1}}>{ui?'OFFLINE UI REPLAY · SIMULATED PROVIDERS':evidence?'DATED CONNECTED EVIDENCE · NOT REEXECUTED DURING RENDER':'AI-ASSISTED PERSONAL PROJECT · SYNTHETIC DATA'}</div>
- <div style={{position:'absolute',bottom:36,right:64,fontSize:23}}>{String(index+1).padStart(2,'0')} / {scenes.length}</div>
+export type SceneProps={replay:Replay};
+export function Frame({id,children,dark=false}:{id:typeof scenes[number]['id'];children:ReactNode;dark?:boolean}){
+ const index=scenes.findIndex(s=>s.id===id),scene=scenes[index],f=useCurrentFrame();
+ return <AbsoluteFill style={{background:dark?'#123535':'#f3f5ed',color:dark?'#f3f5ed':'#173e3d',fontFamily:'Arial,sans-serif',overflow:'hidden',opacity:interpolate(f,[0,10,scene.seconds*30-10,scene.seconds*30],[0,1,1,0],{extrapolateLeft:'clamp',extrapolateRight:'clamp'})}}>
+ <div style={{position:'absolute',width:750,height:750,right:-190,top:-380,borderRadius:'50%',background:dark?'#b9edc909':'#b9edc930',translate:`${Math.sin(f/100)*40}px ${Math.cos(f/110)*35}px`}}/>
+ <div style={{position:'absolute',top:58,left:76,fontSize:22,letterSpacing:4,opacity:.65}}>PARCEL / ORDER OPERATIONS</div>
+ <h1 style={{position:'absolute',top:108,left:72,fontFamily:'Arial,sans-serif',fontSize:82,lineHeight:1.06,letterSpacing:-3,margin:0,translate:`0px ${interpolate(f,[0,22],[36,0],{extrapolateRight:'clamp'})}px`,opacity:interpolate(f,[0,18],[0,1],{extrapolateRight:'clamp'})}}>{scene.title}</h1>
+ {children}
+ <div style={{position:'absolute',bottom:37,left:76,fontSize:19,letterSpacing:1,opacity:.65}}>{scene.kind==='evidence'?'REAL SAAS EVIDENCE · CAPTURED OCT 8, 2026':scene.kind==='ui'?'OFFLINE REPLAY · SYNTHETIC DATA & PROVIDERS':'PERSONAL PROJECT · AI-ASSISTED · SYNTHETIC LOGISTICS'}</div>
+ <div style={{position:'absolute',bottom:37,right:76,fontSize:21,opacity:.65}}>{String(index+1).padStart(2,'0')} / 09</div>
+ <div style={{position:'absolute',bottom:0,height:4,background:dark?'#b9edc9':'#26776a',width:`${(index+f/(scene.seconds*30))/scenes.length*100}%`}}/>
  </AbsoluteFill>;
-};
+}

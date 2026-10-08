@@ -1,0 +1,5 @@
+import {useCurrentFrame} from 'remotion';
+import {Frame,type SceneProps} from '../Scene';
+import {UiView} from '../UiView';
+import {Package,Lift,ease} from '../motion';
+export const Partial=({replay}:SceneProps)=>{const f=useCurrentFrame(),done=f>=100;return <Frame id="partial"><UiView replay={replay} snapshot={done?'partial':'pending'} order/><div style={{position:'absolute',right:76,top:310,width:490}}><Package done={done} label="Package A" arrival={100} delay={25}/><div style={{height:25}}/><Package done={false} label="Package B" delay={55}/><Lift delay={110} style={{marginTop:45,padding:35,borderRadius:26,background:'#fff',boxShadow:'0 20px 45px #193c3c15'}}><div style={{fontSize:24,opacity:.6}}>ORDER PROGRESS</div><div style={{fontSize:78,fontWeight:700,margin:'12px 0'}}>{done?'1':'0'}<span style={{fontSize:40,opacity:.35}}> / 2</span></div><div style={{height:12,borderRadius:10,background:'#e3e9df',overflow:'hidden'}}><div style={{height:'100%',width:`${ease(f,100,150,0,50)}%`,background:'#d8b663',borderRadius:10}}/></div><div style={{fontSize:28,marginTop:25}}>Still partially delivered.</div></Lift></div></Frame>};

@@ -10,6 +10,16 @@ This file records knowledge for this application repository only.
 
 ## Log
 
+### 2026-10-08 - Motion-led portfolio video
+
+- Type: Constraint | Change
+- Status: Active
+- Context: User wants a more polished, juicy video with less text and simple UI animations instead of static slides.
+- Record: One component per scene, short headlines, Engine-backed animated package progress/state switches, CSV grouping, duplicate rejection, workflow particles, spring entrances and evidence camera moves. Original UI tones are synthesized deterministically with no external audio. Scene IDs bind the timeline to components; temporary encoding output only replaces the deliverable after success. Check-only runs write a separate report. Rendering still sends no SaaS actions.
+- Verification: Complete120-second1080p/30fps H.264+AAC render passed;37 input/output hashes matched. Selected scene/state frames inspected;42 tests/build and media types passed. Original audio regeneration hash matched.
+- References: media/src/scenes/, media/src/motion.tsx, media/scripts/sound.mjs, doc/video-pipeline.md
+
+
 ### 2026-10-08 - Repeatable video pipeline and browser access resolved
 
 - Type: Decision | Change
